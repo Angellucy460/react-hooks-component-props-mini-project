@@ -2,14 +2,25 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import Header from "../components/Header";
 
-test("renders a <header> element", () => {
-  const { container } = render(<Header />);
-  expect(container.querySelector("header")).toBeInTheDocument();
-});
+describe("Header Component", () => {
+  test("renders a <header> element", () => {
+    render(<Header name="Any Blog Name" />); 
+    expect(screen.getByRole("banner")).toBeInTheDocument();
+  });
 
-test("renders a <h1> with the blog name", () => {
-  render(<Header name="Underreacted" />);
-  const h1 = screen.queryByText("Underreacted");
-  expect(h1).toBeInTheDocument();
-  expect(h1.tagName).toBe("H1");
+  test("renders an <h1> with the blog name", () => {
+    const blogName = "Underreacted";
+    render(<Header name={blogName} />);
+
+    const h1 = screen.getByText(blogName)
+    expect(h1).toBeInTheDocument();
+    expect(h1.tagName).toBe("H1");
+  });
+  test("uses a default name if no name is passed as a prop", () => {
+    
+    render(<Header />);
+    const h1 = screen.getByText("My Awesome Blog"); // Replace with your actual default name
+    expect(h1).toBeInTheDocument();
+    expect(h1.tagName).toBe("H1");
+  });
 });

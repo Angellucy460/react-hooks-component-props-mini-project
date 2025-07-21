@@ -4,7 +4,7 @@ import Article from "./Article";
 function ArticleList({ posts }) {
   return (
     <main>
-      {posts.map((post) => {
+      {posts?.map((post) => {
         return<Article
             key={post.id}
             title={post.title}
@@ -14,6 +14,7 @@ function ArticleList({ posts }) {
       })  }
     </main>
   );
+
 }
 
 export default ArticleList;

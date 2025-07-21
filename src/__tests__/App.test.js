@@ -1,11 +1,18 @@
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import App from "../components/App";
 
-test("renders the correct child components", () => {
-  const { container } = render(<App />);
-  expect(container.querySelector(".App")).toBeInTheDocument();
-  expect(container.querySelector(".App header")).toBeInTheDocument();
-  expect(container.querySelector(".App aside")).toBeInTheDocument();
-  expect(container.querySelector(".App main")).toBeInTheDocument();
+describe("App Component", () => {
+  test("renders the main application structure", () => {
+    render(<App />); 
+    const appContainer = screen.getByRole("region", { name: /app container/i }) || screen.getByRole("application") || screen.getByTestId("app-container");
+    if (!appContainer) { 
+      expect(screen.getByRole("generic", { name: "App" }) || document.querySelector(".App")).toBeInTheDocument();
+    } else {
+        expect(appContainer).toBeInTheDocument();
+    }
+    expect(screen.getByRole("banner")).toBeInTheDocument();
+    expect(screen.getByRole("complementary")).toBeInTheDocument();
+    expect(screen.getByRole("main")).toBeInTheDocument();
+  });
 });
